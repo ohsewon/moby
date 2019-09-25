@@ -50,6 +50,13 @@ func toContainerdResources(resources container.Resources) *libcontainerdtypes.Re
 		r.Memory.Swap = &resources.MemorySwap
 	}
 
+	for _, hugepageLimit := range resources.HugepageLimits {
+		r.HugepageLimits = append(r.HugepageLimits, specs.LinuxHugepageLimit{
+			Pagesize: hugepageLimit.PageSize,
+			Limit:	  hugepageLimit.Limit,
+		})
+	}
+
 	r.Pids = getPidsLimit(resources)
 	return &r
 }

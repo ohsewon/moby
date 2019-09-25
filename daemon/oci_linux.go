@@ -892,6 +892,13 @@ func WithResources(c *container.Container) coci.SpecOpts {
 			Pids: getPidsLimit(r),
 		}
 
+		for _, hugepageLimit := range r.HugepageLimits {
+				specResources.HugepageLimits = append(specResources.HugepageLimits, specs.LinuxHugepageLimit{
+						Pagesize: hugepageLimit.PageSize,
+						Limit:    hugepageLimit.Limit,
+				})
+		}
+			
 		if s.Linux.Resources != nil && len(s.Linux.Resources.Devices) > 0 {
 			specResources.Devices = s.Linux.Resources.Devices
 		}

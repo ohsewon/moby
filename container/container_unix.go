@@ -346,6 +346,8 @@ func (container *Container) UpdateContainer(hostConfig *containertypes.HostConfi
 		cResources.PidsLimit = resources.PidsLimit
 	}
 
+	cResources.HugepageLimits = resources.HugepageLimits
+
 	// update HostConfig of container
 	if hostConfig.RestartPolicy.Name != "" {
 		if container.HostConfig.AutoRemove && !hostConfig.RestartPolicy.IsNone() {
